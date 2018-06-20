@@ -1,20 +1,3 @@
-Skip to content
- 
-Search or jump to…
-
-Pull requests
-Issues
-Marketplace
-Explore
- @asd5324799 Sign out
-114
-2,040 930 ustbhuangyi/vue-sell
- Code  Issues 35  Pull requests 4  Projects 0  Wiki  Insights
-vue-sell/src/components/seller/seller.vue
-a844d05  on 22 Jan 2017
-@ustbhuangyi ustbhuangyi 2.0 重构
-     
-304 lines (300 sloc)  8.02 KB
 <template>
   <div class="seller" ref="seller">
     <div class="seller-content">
@@ -90,6 +73,7 @@ a844d05  on 22 Jan 2017
   import {saveToLocal, loadFromLocal} from '../../common/js/store';
   import star from '../star/star';
   import split from '../split/split';
+  
   export default {
     props: {
       seller: {
@@ -317,16 +301,3 @@ a844d05  on 22 Jan 2017
         &:last-child
           border-none()
 </style>
-© 2018 GitHub, Inc.
-Terms
-Privacy
-Security
-Status
-Help
-Contact GitHub
-API
-Training
-Shop
-Blog
-About
-Press h to open a hovercard with more details.

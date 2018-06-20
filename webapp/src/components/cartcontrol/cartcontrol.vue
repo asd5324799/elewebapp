@@ -11,9 +11,6 @@
 </template>
 
 <script>
-    import BScroll from 'better-scroll';
-    import shopcart from '../shopcart/shopcart.vue';
-    import cartcontrol from '../cartcontrol/cartcontrol.vue'
     import Vue from 'vue'
 
     export default {
@@ -34,9 +31,9 @@
                 } else {
                     this.food.count++;
                 }
-                this.$emit('cart-add', event.target);
+                this.$emit('add', event.target);
             },
-            decreaseCart(s) {
+            decreaseCart(event) {
                 if (!event._constructed) {
                     return;
                 }

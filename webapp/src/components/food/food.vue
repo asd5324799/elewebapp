@@ -19,7 +19,7 @@
                         <span class="old" v-show="food.oldPrice">￥{{food.oldPrice}}</span>
                     </div>
                     <div class="cartcontrol-wrapper">
-                        <cartcontrol :food="food"></cartcontrol> 
+                        <cartcontrol @add="addFood" :food="food"></cartcontrol> 
                     </div>
                     <transition name="fade">
                         <div @click.stop.prevent="addFirst" class="buy" v-show="!food.count || food.count === 0">加入购物车</div>
@@ -36,7 +36,7 @@
                     <ratingselect @select="selectRating" @toggle="toggleContent" :select-type="selectType" :only-content="onlyContent" :desc="desc" :ratings="food.ratings"></ratingselect>
                     <div class="rating-wrapper">
                       <ul v-show="food.ratings && food.ratings.length">
-                        <li v-show="needShow(rating.rateType, rating.text)" v-for="rating in food.ratings" class="rating-item">
+                        <li v-show="needShow(rating.rateType, rating.text)" v-for="rating in food.ratings" class="rating-item border-1px">
                           <div class="user">
                             <span class="name">{{rating.username}}</span>
                             <img :src="rating.avatar" alt="" width="12" height="12" class="avatar">
@@ -55,14 +55,14 @@
     </transition>
 </template>
 <script>
-    const ALL = 2;
-
     import BScroll from 'better-scroll';
     import Vue from 'vue';
-    import cartcontrol from '../cartcontrol/cartcontrol.vue';
-    import split from '../split/split.vue'
-    import ratingselect from '../ratingselect/ratingselect.vue';
     import {formatDate} from '../../common/js/date'
+    import cartcontrol from '../cartcontrol/cartcontrol.vue';
+    import ratingselect from '../ratingselect/ratingselect.vue';
+    import split from '../split/split.vue'
+
+    const ALL = 2;
 
     export default {
         props: {
@@ -107,6 +107,19 @@
                 this.$emit('add', event.target);
                 Vue.set(this.food, 'count', 1);
             },
+            needShow(type,text) {
+              if(this.onlyContent && !text) {
+                return false;
+              }
+              if(this.selectType === ALL) {
+                return true;
+              } else {
+                return type === this.selectType;
+              }
+            },
+            addFood(target) {
+              this.$emit('add', target);
+            },
             selectRating(type) {
               this.selectType = type;
               this.$nextTick(() => {
@@ -119,16 +132,6 @@
                 this.scroll.refresh();
               });
             },
-            needShow(type,text) {
-              if(this.onlyContent && !text) {
-                return false;
-              }
-              if(this.selectType === ALL) {
-                return true;
-              } else {
-                return type === this.selectType;
-              }
-            }
         },
         filters: {
           formatDate(time) {
